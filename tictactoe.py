@@ -54,14 +54,6 @@ def result(board, action):
     new_board[action[0]][action[1]] = player(board)
     return new_board
 
-def undo(board, action):
-
-    if board[action[0]][action[1]] is EMPTY:
-        raise ValueError("Invalid move")
-    new_board = copy.deepcopy(board)
-    new_board[action[0]][action[1]] = EMPTY
-    return new_board
-
 
 
 def winner(board):
@@ -114,7 +106,7 @@ def minimax(board):
                 return float('-inf')
             
         elif is_maximizing:
-            maxEval = -1000
+            maxEval = -float('inf')
             for act in actions(board):
                 eval = evaluation(result(board,act),p,alpha,beta,False)
                 maxEval = max(maxEval,eval)
@@ -123,7 +115,7 @@ def minimax(board):
                     break
             return maxEval
         elif not is_maximizing:
-            minEval = 1000
+            minEval = float('inf')
             for act in actions(board):
                 eval = evaluation(result(board,act),p,alpha,beta,True)
                 minEval = min(minEval,eval)
@@ -133,7 +125,7 @@ def minimax(board):
             return minEval            
         
 
-    bestScore = -99999
+    bestScore = -float('inf')
     move=(-1,-1)
     for act in actions(board): 
         score = evaluation(result(board,act),p,-9999,9999,False)
